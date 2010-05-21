@@ -31,7 +31,9 @@ namespace Ninject.RhinoMocks
 		/// <returns>The created instance.</returns>
 		public object Create(IContext context)
 		{
-			return MockRepository.GenerateMock(Type, new Type[0], new object[0]);
+			var method = typeof(MockRepository).GetMethod("GenerateMock");
+			var genericMethod = method.MakeGenericMethod(Type);
+			return genericMethod.Invoke(null, new object[1] { null });
 		}
 
 		/// <summary>
